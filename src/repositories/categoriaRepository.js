@@ -4,17 +4,17 @@ import Response from '../helpers/response.js'
 import unique from '../helpers/consistirUnique.js';
 
 
-var listaAutores = [];
+var listaCategoria = [];
 
- const arquivo = './src/data/Autores.json';
+ const arquivo = './src/data/Categorias.json';
 
 
 
-class AutorRepository {
+class CategoriaRepository {
 
 	
    
-	async save (autor) {
+	async save (categoria) {
 	
       const  response = new Response();
 	   
@@ -23,25 +23,22 @@ class AutorRepository {
 	  response.message = 'Salvo com sucesso';
 
 
-	  response.data.push(autor);
+	  response.data.push(categoria);
 	  
-	  this.listSave(autor);
+	  this.listSave(categoria);
 
-
-
-	  return response;
-       
+	  return response;       
 
 
 	}
 
 
-	listSave (autor) {
+	listSave (categoria) {
 
 
-		listaAutores.push(autor);
+		listaCategoria.push(categoria);
 
-		const jsonString = JSON.stringify(listaAutores);
+		const jsonString = JSON.stringify(listaCategoria);
      
 
 		if (fs.existsSync(arquivo)) {
@@ -51,12 +48,12 @@ class AutorRepository {
 
 		
 
-		fs.writeFile('./src/data/Autores.json', jsonString, (err) => {
+		fs.writeFile(arquivo, jsonString, (err) => {
         
 			if (err) {
            console.error("Erro ao escrever o arquivo:", err);
           } else {
-            console.log("Array salvo em autores.json");
+            console.log("Array salvo em categorias.json");
           }
        
 		});
@@ -75,7 +72,7 @@ class AutorRepository {
 
 		   if (_arquivo != '')
 		   {
-              listaAutores  =  JSON.parse(_arquivo);
+              listaCategoria  =  JSON.parse(_arquivo);
 
 		   }
 
@@ -91,19 +88,21 @@ class AutorRepository {
 
         let lista = []
      	
-		if (listaAutores.length >  0)
+		if (listaCategoria.length >  0)
 		{
 
-           listaAutores.forEach(autor => {
+           listaCategoria.forEach(categoria => {
+
 
 			
-			   Object.keys(autor).forEach(key => {
+			   Object.keys(categoria).forEach(key => {
 
                 
 
-				if (key.toUpperCase() == chave.toUpperCase() && autor[key].toUpperCase() == valor.toUpperCase())
-				{					
-					lista.push(autor);
+				if (key.toUpperCase() == chave.toUpperCase() && categoria[key].toUpperCase() == valor.toUpperCase())
+				{
+					
+					lista.push(categoria);
 				}	
 
                 
@@ -122,10 +121,11 @@ class AutorRepository {
 	 }
 
 
-	 async ConsistirUnico (chave,valor) {
 
-		return await unique(listaAutores,chave,valor);
+	  async ConsistirUnico (chave,valor) {
+		return await unique(listaCategoria,chave,valor);
 	 }
+
 
 	
 
@@ -138,4 +138,4 @@ class AutorRepository {
 }
 
 
-export default AutorRepository;
+export default CategoriaRepository;

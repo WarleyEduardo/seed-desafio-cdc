@@ -1,22 +1,18 @@
 
 import gerarId from '../helpers/gerarId.js';
 
-class Autor {
+class Categoria {
 
    id  =  ''
    nome = '';
-   email = '';
-   descricao = ''
    data = null;
 
 
-   constructor (nome,email,descricao) {
+   constructor (nome) {
 
 
       this.id        = gerarId();
 	  this.nome      = nome;
-	  this.email     = email;
-	  this.descricao = descricao
 	  this.data      = new Date();
 	  
 	 
@@ -26,4 +22,4 @@ class Autor {
 }
 
 
-export default Autor;
+export default Categoria;

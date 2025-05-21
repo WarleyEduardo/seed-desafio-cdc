@@ -11,30 +11,45 @@ class AutorController {
 
 
 		try {
+			
+			
 			let httpStatus = 200;
 
-			let { nome , email , descricao } = req.body;
+		  let { nome , email , descricao } = req.body;
 
-		   const autor = new Autor(nome,email, descricao);	 		
-
+		   const autor      = new Autor(nome,email, descricao);	 		
 		   const repository = new AutorRepository();
+           let response     = new Response();
+
+		   const unico = await repository.ConsistirUnico('email',email);
+		   
+		 
+		   if (unico == false)
+		   {
+               
+              response.success = false;
+			  response.message = 'Existe autor cadastrado com e-mail informado';
+
+			  httpStatus = 400;
+		      return res.status(httpStatus).send(response)
+
+		   }	
+
 			
-			const response  = await repository.salve(autor);
+		   response  = await repository.save(autor);
 
-			if (response.success == false) httpStatus = 400; 
+		   if (response.success == false) httpStatus = 400; 
 
-			return res.status(httpStatus).send(response)
+		   return res.status(httpStatus).send(response)
 			
 		} catch (e) {
-
-
 
 			let httpStatus = 400;
 
 			const response = new Response();
 			
 			response.success = false
-			response.message = 'Erro ao gravar autor ' +  e ;
+			response.message = 'Erro ao gravar autor : ' +  e ;
 
 			return res.status(httpStatus).send(response)
 			

@@ -23,8 +23,8 @@ app.use((req, res, next) => {
 
 	const response = new Response();
 
-    response.sucess = false;
-	response.msg    = 'rota informada não existe';
+    response.success = false;
+	response.message    = 'rota informada não existe';
 	res.status(404).send(response)
 });
 
