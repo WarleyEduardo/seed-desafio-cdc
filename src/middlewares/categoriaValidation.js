@@ -7,6 +7,5 @@ export const postCategoriaValidation = () =>
 	];
 };
 
-
 export default postCategoriaValidation
 

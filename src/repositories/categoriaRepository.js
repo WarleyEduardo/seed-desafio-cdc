@@ -61,7 +61,6 @@ class CategoriaRepository {
 	}
 
 
-
      async loadList() {
        	
 

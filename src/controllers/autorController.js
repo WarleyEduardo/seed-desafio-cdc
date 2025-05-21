@@ -9,7 +9,6 @@ class AutorController {
 	static async postAutor(req, res, next) {
 
 
-
 		try {
 			
 			

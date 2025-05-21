@@ -7,5 +7,4 @@ const categoriaRoute = express.Router();
 
 categoriaRoute.post('/', postCategoriaValidation(), validate, CategoriaController.postCategoria);
 
-
 export default categoriaRoute;

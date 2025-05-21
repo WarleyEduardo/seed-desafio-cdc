@@ -7,7 +7,6 @@ class Categoria {
    nome = '';
    data = null;
 
-
    constructor (nome) {
 
 

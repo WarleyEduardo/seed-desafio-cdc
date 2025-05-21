@@ -12,7 +12,7 @@ class CategoriaController {
 
 		try {
 			
-			
+		
 		   let httpStatus = 200;
 
 		   let { nome } = req.body;

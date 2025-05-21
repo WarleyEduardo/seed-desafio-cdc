@@ -9,6 +9,5 @@ export const postAutorValidation = () =>
 	];
 };
 
-
 export default postAutorValidation
 

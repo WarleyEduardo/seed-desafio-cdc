@@ -5,5 +5,4 @@ const gerarId = () => {
 	return uuidv4();
 };
 
-
 export default gerarId;

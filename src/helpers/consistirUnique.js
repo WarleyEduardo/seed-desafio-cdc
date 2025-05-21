@@ -1,8 +1,6 @@
 const unique = async (lista,chave, valor) => {
 
-
 	let unico = true;
-
 
 	if (lista.length >  0)
 	{

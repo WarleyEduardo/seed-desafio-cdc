@@ -2,7 +2,6 @@
 import gerarId from '../helpers/gerarId.js';
 
 class Autor {
-
    id  =  ''
    nome = '';
    email = '';

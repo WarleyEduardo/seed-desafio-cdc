@@ -110,9 +110,7 @@ class AutorRepository {
 
              });
 		   })
-
           
-
 
 		}	
 
