@@ -12,7 +12,7 @@ class Categoria {
 
       this.id        = gerarId();
 	  this.nome      = nome;
-	  this.data      = new Date();
+	  this.data      = new Date().toLocaleDateString('pt-BR'); ;
 	  
 	 
    }

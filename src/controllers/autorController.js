@@ -33,7 +33,7 @@ class AutorController {
 			
 		   response  = await repository.save(autor);
 
-		   if (response.success == false) httpStatus = 400; 
+		   if (!response.success) httpStatus = 400; 
 
 		   return res.status(httpStatus).send(response)
 			

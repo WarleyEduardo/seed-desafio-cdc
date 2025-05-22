@@ -70,10 +70,18 @@ class LivroController {
 
 
 
+		   response  = await livro.consistirCampos();
+
+		   if (!response.success)
+		   {
+              httpStatus = 400; 
+
+		      return res.status(httpStatus).send(response)
+		   }
 			
 		   response  = await livrorepository.save(livro);
 
-		   if (response.success == false) httpStatus = 400; 
+		   if (!response.success) httpStatus = 400; 
 
 		   return res.status(httpStatus).send(response)
 			

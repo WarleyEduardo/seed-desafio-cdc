@@ -9,7 +9,8 @@ export const postLivroValidation = () =>
 		body('preco').isCurrency().withMessage('campo preco deve ser informado no body').isFloat({min:20}).withMessage('campo preço deve ter no mínino 20'),
 		body('isbn').isString().withMessage('campo isbn deve ser informado no body').notEmpty().withMessage('campo isbn não pode ficar vazio'),
 		body('categoria').isString().withMessage('campo categoria deve ser informado no body').notEmpty().withMessage('campo categoria não pode ficar vazio'),
-		body('autor').isString().withMessage('campo autor deve ser informado no body').notEmpty().withMessage('campo autor não pode ficar vazio')
+		body('autor').isString().withMessage('campo autor deve ser informado no body').notEmpty().withMessage('campo autor não pode ficar vazio'),
+		body('datapublicacao').optional().isDate({ format: 'DD/MM/YYYY' }).withMessage('datapulicacao deve estar no formato : DD/MM/YYYY')
 	];
 };
 

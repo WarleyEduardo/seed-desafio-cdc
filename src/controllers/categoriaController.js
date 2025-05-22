@@ -35,7 +35,7 @@ class CategoriaController {
 			
 		   response  = await repository.save(categoria);
 
-		   if (response.success == false) httpStatus = 400; 
+		   if (!response.success) httpStatus = 400; 
 
 		   return res.status(httpStatus).send(response)
 			

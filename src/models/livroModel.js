@@ -1,5 +1,6 @@
 
 import gerarId from '../helpers/gerarId.js';
+import Response from '../helpers/response.js';
 
 class Livro {
 
@@ -25,12 +26,46 @@ class Livro {
 	  this.resumo         = resumo;
 	  this.paginas        = paginas;
 	  this.preco          = preco;
-	  this.dataCadastro   = new Date();
+	  this.dataCadastro   = new Date().toLocaleDateString('pt-BR'); 
+
 	  this.isbn           = isbn;
 	  this.categoria      = categoria;
 	  this.autor          = autor;
 	  
 	 
+   }
+
+
+   consistirCampos() {
+
+     
+	 let dataAtual = new Date(); 
+      dataAtual = dataAtual.toLocaleDateString('pt-BR'); 
+
+	
+	
+	
+	
+	const response = new Response();
+	 response.success = true;
+	 response.message = 'Validado com sucesso';
+
+	 if (this.dataPublicacao != null)
+	 {
+       
+		if  (this.dataPublicacao <= dataAtual)
+	   {
+	      response.success = false;
+		  response.message = 'Data de publicação deve ser maior do que a data atual';
+
+	   }	
+
+	 }	
+
+
+	 return response;
+  
+
    }
 
 
