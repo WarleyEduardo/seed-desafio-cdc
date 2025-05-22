@@ -87,11 +87,14 @@ class LivroRepository {
 	} 
 	
 
-	async find (chave,valor) {
+	async find (chave,valor,campos) {
 
         let lista = []
-     	
-		if (listaLivros.length >  0)
+		let _lista = []
+
+		let response = new Response();
+		     	
+		if (listaLivros.length >  0  && chave !== '' && valor !== '' && chave !==  undefined && valor !== undefined )
 		{
 
            listaLivros.forEach(livro => {
@@ -99,14 +102,16 @@ class LivroRepository {
 			
 			   Object.keys(livro).forEach(key => {
 
-                
-
+               
 				if (key.toUpperCase() == chave.toUpperCase() && livro[key].toUpperCase() == valor.toUpperCase())
-				{					
-					lista.push(livro);
+				{			
+					 
+					_lista.push(livro);
+					
 				}	
 
-                
+                            
+			
 
              });
 		   })
@@ -114,9 +119,55 @@ class LivroRepository {
 
 		}	
 
-	
+         if ( chave == '' || valor == ''  || chave == undefined || valor == undefined)
+		 {
+             _lista = listaLivros;
+
+		 }	
+
+
+         if (campos == undefined) 
+		 {
+            lista = _lista;
+		 }
+
+
+		 if (_lista.length >  0 && campos !== undefined )
+		 {
+
+			 _lista.forEach(livro => {
+
+
+                 
+				Object.keys(livro).forEach(key => {
+
+				
+				   if(campos.indexOf(key) < 0)
+                   {  
+                      
+					  delete livro[key]
+                   }
+
+                });
+				
+
+				lista.push(livro);
+
+				
+		   })
+
+
+		   
+
+
+		 }	
+
+
+		 response.success = lista.length > 0 ? true : false;
+		 response.message = 'Consulta realizada dados';
+		 response.data = lista;	
 		
-		return lista;
+		return response;
 	 }
 
 

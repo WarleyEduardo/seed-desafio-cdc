@@ -5,7 +5,9 @@ import validate from '../middlewares/handleValidation.js';
 
 const livroRoute = express.Router();
 
-livroRoute.post('/', postLivroValidation(), validate, LivroController.postLivro);
+livroRoute.post('/livro', postLivroValidation(), validate, LivroController.postLivro);
+livroRoute.get('/livros', LivroController.getLivros);
+livroRoute.get('/livros/:id', LivroController.getLivro);
 
 
 export default livroRoute;

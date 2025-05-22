@@ -70,7 +70,7 @@ class LivroController {
 
 
 
-		   response  = await livro.consistirCampos();
+		   response  = livro.consistirCampos();
 
 		   if (!response.success)
 		   {
@@ -91,6 +91,63 @@ class LivroController {
 			
 		}
 	}
+
+
+
+	static async getLivros(req, res, next) {
+
+
+		try {
+
+			
+		   let httpStatus = 200;
+
+		   
+		   const livrorepository  = new LivroRepository();
+           let response           = null;   
+
+			
+		   response  = await livrorepository.find('','',['id','titulo']);
+
+		   if (!response.success) httpStatus = 400; 
+
+		   return res.status(httpStatus).send(response)
+			
+		} catch (e) {
+
+			restricaoValidation(res,'Erro ao consultar livro : ' +  e);
+			
+		}
+	}
+
+
+	static async getLivro(req, res, next) {
+
+
+		try {
+
+
+		   const {id}  = req.params;
+		 		
+		   let httpStatus = 200;
+		   
+		   const livrorepository  = new LivroRepository();
+           let response           = null
+
+			
+		   response  = await livrorepository.find('id',id);
+
+		   if (!response.success) httpStatus = 404; 
+
+		   return res.status(httpStatus).send(response)
+			
+		} catch (e) {
+
+			restricaoValidation(res,'Erro ao consultar livro : ' +  e);
+			
+		}
+	}
+
 
 }
 

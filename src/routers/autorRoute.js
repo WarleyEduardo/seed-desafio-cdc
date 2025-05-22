@@ -6,6 +6,7 @@ import validate from '../middlewares/handleValidation.js';
 const autorRoute = express.Router();
 
 autorRoute.post('/', postAutorValidation(), validate, AutorController.postAutor);
+autorRoute.get('/', postAutorValidation(), validate, AutorController.getAutores);
 
 
 export default autorRoute;

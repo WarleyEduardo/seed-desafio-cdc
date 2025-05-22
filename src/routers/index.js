@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.use('/autor', autorRoute);
 router.use('/categoria',categoriaRoute);
-router.use('/livro',livroRoute);
+router.use('/',livroRoute);
 
 export default router;

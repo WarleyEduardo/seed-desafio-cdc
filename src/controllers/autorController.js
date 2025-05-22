@@ -48,6 +48,35 @@ class AutorController {
 
 	}
 
+
+
+
+	static async getAutores(req, res, next) {
+
+
+		try {
+			
+			
+		  let httpStatus = 200;
+	
+			
+		   response  = await repository.find();
+
+		   if (!response.success) httpStatus = 400; 
+
+		   return res.status(httpStatus).send(response)
+			
+		} catch (e) {
+
+			restricaoValidation(res,'Erro ao consultar autor : ' +  e);
+			
+		}
+
+
+
+
+	}
+
 }
 
 
