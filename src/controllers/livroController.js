@@ -14,18 +14,19 @@ class LivroController {
 			
 		   let httpStatus = 200;
 
-		   let { titulo,resumo, preco, paginas, isbn, datapublicacao, categoria, autor  } = req.body;
+		   let { titulo,resumo, sumario, preco, paginas, isbn, datapublicacao, categoria, autor  } = req.body;
 
-		   const livro  = new Livro(titulo,resumo,preco,isbn,paginas,categoria,autor);	
-		   livro.dataPublicacao = datapublicacao;
+		   const livro           = new Livro(titulo,resumo,preco,isbn,paginas,categoria,autor);	
+		   livro.dataPublicacao  = datapublicacao;
+		   livro.sumario         = sumario;
 		   
-		   const repository = new LivroRepository();
-           let response     = new Response();	
+		   const repository      = new LivroRepository();
+           let response          = new Response();	
 		   
 		   
-		   const tituloUnico = await repository.ConsistirUnico('titulo',titulo);		   
+		   const existeTitulo = await repository.consistirExiste('titulo',titulo);		   
 		 
-		   if (!tituloUnico)
+		   if (existeTitulo)
 		   {
                
               response.success = false;
@@ -37,8 +38,9 @@ class LivroController {
 		   }	
 
 
-		   const isbnUnico = await repository.ConsistirUnico('isbn',isbn);		
-		    if (!isbnUnico)
+		   const existeIsbn = await repository.consistirExiste('isbn',isbn);		
+		   
+		   if (existeIsbn)
 		   {
                
               response.success = false;
@@ -68,10 +70,8 @@ class LivroController {
 			return res.status(httpStatus).send(response)
 			
 		}
-
 	}
 
 }
-
 
 export default LivroController;

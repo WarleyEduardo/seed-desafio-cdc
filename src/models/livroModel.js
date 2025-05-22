@@ -16,7 +16,8 @@ class Livro {
    autor          = null;
 
 
-   constructor (titulo,resumo,preco,isbn,paginas,categoria,autor) {
+   constructor (titulo,resumo,preco,isbn,paginas,categoria,autor) 
+   {
 
 
       this.id             = gerarId();

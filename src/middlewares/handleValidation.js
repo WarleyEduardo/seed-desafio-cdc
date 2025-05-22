@@ -8,30 +8,25 @@ const validate  = (req,res, next) =>
 
 
 	if (errors.isEmpty()) {
-
 		
-		return next();
-		
+		return next();		
 	}
 
 
 	let erros = '| '
 
 	errors.array().map( (err) => 
-	{
-
-        
+	{        
 		erros += err.msg  +  ' |';
-
 	} )
 
 
 	const response = new Response()
 
-	response.sucess  =  false
-	response.msg     = erros
+	response.success  =  false
+	response.message  = erros
 	
-	return res.status(422).send(response);
+	return res.status(400).send(response);
 
 }
 

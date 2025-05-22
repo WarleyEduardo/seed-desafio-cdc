@@ -12,7 +12,7 @@ class AutorController {
 		try {
 			
 			
-			let httpStatus = 200;
+		  let httpStatus = 200;
 
 		  let { nome , email , descricao } = req.body;
 
@@ -20,10 +20,10 @@ class AutorController {
 		   const repository = new AutorRepository();
            let response     = new Response();
 
-		   const unico = await repository.ConsistirUnico('email',email);
+		   const existe = await repository.consistirExiste('email',email);
 		   
 		 
-		   if (unico == false)
+		   if (existe)
 		   {
                
               response.success = false;

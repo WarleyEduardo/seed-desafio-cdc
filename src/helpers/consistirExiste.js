@@ -1,6 +1,6 @@
-const unique = async (lista,chave, valor) => {
+const consistirExiste = async (lista,chave, valor) => {
 
-	let unico = true;
+	let existe = false;
 
 	if (lista.length >  0)
 	{
@@ -16,9 +16,9 @@ const unique = async (lista,chave, valor) => {
 
 			
 			   if (key.toUpperCase() == chave.toUpperCase() && valorKey.toUpperCase() == valor.toUpperCase())
-			   {					
+			   {			
 				  
-				  unico = false;
+				  existe = true;
 				  break
 			   }	
             
@@ -27,7 +27,7 @@ const unique = async (lista,chave, valor) => {
            }
 
 
-		   if (unico == false) break;
+		   if (existe == true) break;
 		}
 		
 		
@@ -36,9 +36,9 @@ const unique = async (lista,chave, valor) => {
 
 
    
-	return  unico ;
+	return  existe ;
 
 }
 
-export default unique;
+export default consistirExiste;
 

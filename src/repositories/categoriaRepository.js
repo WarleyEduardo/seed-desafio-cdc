@@ -1,7 +1,7 @@
 
 import fs from 'fs';
 import Response from '../helpers/response.js'
-import unique from '../helpers/consistirUnique.js';
+import consistirExiste from '../helpers/consistirExiste.js';
 
 
 var listaCategoria = [];
@@ -121,8 +121,8 @@ class CategoriaRepository {
 
 
 
-	  async ConsistirUnico (chave,valor) {
-		return await unique(listaCategoria,chave,valor);
+	  async consistirExistir (chave,valor) {
+		return await consistirExiste(listaCategoria,chave,valor);
 	 }
 
 

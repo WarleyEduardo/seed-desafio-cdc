@@ -22,9 +22,9 @@ class CategoriaController {
            let response     = new Response();	
 		   
 		   
-		   const unico = await repository.ConsistirUnico('nome',nome);		   
+		   const existe = await repository.consistirExistir('nome',nome);		   
 		 
-		   if (!unico)
+		   if (existe)
 		   {
                
               response.success = false;

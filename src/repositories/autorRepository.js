@@ -1,7 +1,7 @@
 
 import fs from 'fs';
 import Response from '../helpers/response.js'
-import unique from '../helpers/consistirUnique.js';
+import consistirExiste from '../helpers/consistirExiste.js';
 
 
 var listaAutores = [];
@@ -51,7 +51,7 @@ class AutorRepository {
 
 		
 
-		fs.writeFile('./src/data/Autores.json', jsonString, (err) => {
+		fs.writeFile(arquivo, jsonString, (err) => {
         
 			if (err) {
            console.error("Erro ao escrever o arquivo:", err);
@@ -120,9 +120,9 @@ class AutorRepository {
 	 }
 
 
-	 async ConsistirUnico (chave,valor) {
+	 async consistirExiste (chave,valor) {
 
-		return await unique(listaAutores,chave,valor);
+		return await consistirExiste(listaAutores,chave,valor);
 	 }
 
 	

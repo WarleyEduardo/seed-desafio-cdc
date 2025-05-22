@@ -1,7 +1,7 @@
 
 import fs from 'fs';
 import Response from '../helpers/response.js'
-import unique from '../helpers/consistirUnique.js';
+import consistirExiste from '../helpers/consistirExiste.js';
 
 
 var listaLivros = [];
@@ -14,7 +14,7 @@ class LivroRepository {
 
 	
    
-	async save (autor) {
+	async save (livro) {
 	
       const  response = new Response();
 	   
@@ -23,9 +23,9 @@ class LivroRepository {
 	  response.message = 'Salvo com sucesso';
 
 
-	  response.data.push(autor);
+	  response.data.push(livro);
 	  
-	  this.listSave(autor);
+	  this.listSave(livro);
 
 
 
@@ -39,7 +39,7 @@ class LivroRepository {
 	listSave (livro) {
 
 
-		listaLivros.push(autor);
+		listaLivros.push(livro);
 
 		const jsonString = JSON.stringify(listaLivros);
      
@@ -51,12 +51,12 @@ class LivroRepository {
 
 		
 
-		fs.writeFile('./src/data/Autores.json', jsonString, (err) => {
+		fs.writeFile(arquivo, jsonString, (err) => {
         
 			if (err) {
            console.error("Erro ao escrever o arquivo:", err);
           } else {
-            console.log("Array salvo em autores.json");
+            console.log("Array salvo em livros.json");
           }
        
 		});
@@ -120,9 +120,9 @@ class LivroRepository {
 	 }
 
 
-	 async ConsistirUnico (chave,valor) {
+	 async consistirExiste (chave,valor) {
 
-		return await unique(listaLivros,chave,valor);
+		return await consistirExiste(listaLivros,chave,valor);
 	 }
 
 	

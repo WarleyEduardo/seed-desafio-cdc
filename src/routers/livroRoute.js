@@ -1,11 +1,11 @@
 import express from 'express';
-import AutorController from '../controllers/autorController.js';
-import { postAutorValidation } from '../middlewares/autorValidation.js';
+import LivroController from '../controllers/livroController.js';
+import { postLivroValidation } from '../middlewares/livroValidation.js';
 import validate from '../middlewares/handleValidation.js';
 
 const livroRoute = express.Router();
 
-autorRoute.post('/', postAutorValidation(), validate, AutorController.postAutor);
+livroRoute.post('/', postLivroValidation(), validate, LivroController.postLivro);
 
 
 export default livroRoute;
