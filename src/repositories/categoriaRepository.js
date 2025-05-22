@@ -121,7 +121,7 @@ class CategoriaRepository {
 
 
 
-	  async consistirExistir (chave,valor) {
+	  async consistirExiste (chave,valor) {
 		return await consistirExiste(listaCategoria,chave,valor);
 	 }
 

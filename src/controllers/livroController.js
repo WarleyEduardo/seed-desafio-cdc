@@ -1,7 +1,8 @@
-import Response from '../helpers/response.js';
 import Livro from '../models/livroModel.js';
 import LivroRepository from '../repositories/livroRepository.js';
-
+import AutorRepository from '../repositories/autorRepository.js';
+import CategoriaRepository from '../repositories/categoriaRepository.js'
+import restricaoValidation from '../middlewares/restricaoValidation.js';
 
 class LivroController {
 
@@ -17,42 +18,60 @@ class LivroController {
 		   let { titulo,resumo, sumario, preco, paginas, isbn, datapublicacao, categoria, autor  } = req.body;
 
 		   const livro           = new Livro(titulo,resumo,preco,isbn,paginas,categoria,autor);	
-		   livro.dataPublicacao  = datapublicacao;
-		   livro.sumario         = sumario;
+		   livro.dataPublicacao  = datapublicacao == undefined ? null : datapublicacao ;
+		   livro.sumario         = sumario == undefined ? '' : sumario ;
 		   
-		   const repository      = new LivroRepository();
-           let response          = new Response();	
+		   const livrorepository  = new LivroRepository();
+           let response           = null;       
+
 		   
 		   
-		   const existeTitulo = await repository.consistirExiste('titulo',titulo);		   
+		   const existeTitulo = await livrorepository.consistirExiste('titulo',titulo);		   
 		 
 		   if (existeTitulo)
 		   {
-               
-              response.success = false;
-			  response.message = 'Existe livro cadastrado com titulo informado';
-
-			  httpStatus = 400;
-			  return res.status(httpStatus).send(response)
+              
+			 return  await restricaoValidation(res,'Existe livro cadastrado com titulo informado');
 
 		   }	
 
 
-		   const existeIsbn = await repository.consistirExiste('isbn',isbn);		
+		   const existeIsbn = await livrorepository.consistirExiste('isbn',isbn);		
 		   
 		   if (existeIsbn)
 		   {
                
-              response.success = false;
-			  response.message = 'Existe livro cadastrado com isbn informado';
-
-			  httpStatus = 400;
-			  return res.status(httpStatus).send(response)
+             return  await restricaoValidation(res,'Existe livro cadastrado com isbn informado');
 
 		   }
 
+            const categoriaRepository = new CategoriaRepository();
+		    
+		    const existeCategoria = await categoriaRepository.consistirExiste('id',categoria);		   
+		 
+		   if (!existeCategoria)		  
+		   {
+              
+			 return  await restricaoValidation(res,'Categoria informada não consta');
+
+		   }	
+
+
+		    const autorRepository = new AutorRepository();
+		    
+		    const existeAutor = await autorRepository.consistirExiste('id',autor);		   
+		 
+		   if (!existeAutor)		  
+		   {
+              
+			 return await restricaoValidation(res,'autor informado não consta ');
+
+		   }	
+
+
+
 			
-		   response  = await repository.save(livro);
+		   response  = await livrorepository.save(livro);
 
 		   if (response.success == false) httpStatus = 400; 
 
@@ -60,14 +79,7 @@ class LivroController {
 			
 		} catch (e) {
 
-			let httpStatus = 400;
-
-			const response = new Response();
-			
-			response.success = false
-			response.message = 'Erro ao gravar livro : ' +  e ;
-
-			return res.status(httpStatus).send(response)
+			restricaoValidation(res,'Erro ao gravar livro : ' +  e);
 			
 		}
 	}

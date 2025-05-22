@@ -1,6 +1,7 @@
-import Response from '../helpers/response.js';
 import Categoria from '../models/CategoriaModel.js';
 import CategoriaRepository from '../repositories/categoriaRepository.js';
+import restricaoValidation from '../middlewares/restricaoValidation.js';
+
 
 
 class CategoriaController {
@@ -19,19 +20,15 @@ class CategoriaController {
 
 		   const categoria  = new Categoria(nome);	 		
 		   const repository = new CategoriaRepository();
-           let response     = new Response();	
+           let response     = null;	
 		   
 		   
-		   const existe = await repository.consistirExistir('nome',nome);		   
+		   const existe = await repository.consistirExiste('nome',nome);		   
 		 
 		   if (existe)
 		   {
-               
-              response.success = false;
-			  response.message = 'Existe categoria cadastrada com nome informado';
-
-			  httpStatus = 400;
-			   return res.status(httpStatus).send(response)
+              
+			  return  await restricaoValidation(res,'Existe categoria cadastrada com nome informado');
 
 		   }	
 
@@ -44,14 +41,7 @@ class CategoriaController {
 			
 		} catch (e) {
 
-			let httpStatus = 400;
-
-			const response = new Response();
-			
-			response.success = false
-			response.message = 'Erro ao gravar categoria : ' +  e ;
-
-			return res.status(httpStatus).send(response)
+			restricaoValidation(res,'Erro ao gravar categoria : ' +  e);
 			
 		}
 

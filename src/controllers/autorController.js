@@ -1,6 +1,6 @@
-import Response from '../helpers/response.js';
 import Autor from '../models/AutorModel.js';
 import AutorRepository from '../repositories/autorRepository.js';
+import restricaoValidation from '../middlewares/restricaoValidation.js';
 
 
 class AutorController {
@@ -18,7 +18,7 @@ class AutorController {
 
 		   const autor      = new Autor(nome,email, descricao);	 		
 		   const repository = new AutorRepository();
-           let response     = new Response();
+           let response     = null;
 
 		   const existe = await repository.consistirExiste('email',email);
 		   
@@ -26,11 +26,7 @@ class AutorController {
 		   if (existe)
 		   {
                
-              response.success = false;
-			  response.message = 'Existe autor cadastrado com e-mail informado';
-
-			  httpStatus = 400;
-		      return res.status(httpStatus).send(response)
+             return await restricaoValidation(res,'Existe autor cadastrado com e-mail informado');
 
 		   }	
 
@@ -43,14 +39,7 @@ class AutorController {
 			
 		} catch (e) {
 
-			let httpStatus = 400;
-
-			const response = new Response();
-			
-			response.success = false
-			response.message = 'Erro ao gravar autor : ' +  e ;
-
-			return res.status(httpStatus).send(response)
+			restricaoValidation(res,'Erro ao gravar autor : ' +  e);
 			
 		}
 
