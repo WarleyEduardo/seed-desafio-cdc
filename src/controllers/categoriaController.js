@@ -49,7 +49,7 @@ class CategoriaController {
 			const response = new Response();
 			
 			response.success = false
-			response.message = 'Erro ao gravar autor : ' +  e ;
+			response.message = 'Erro ao gravar categoria : ' +  e ;
 
 			return res.status(httpStatus).send(response)
 			
