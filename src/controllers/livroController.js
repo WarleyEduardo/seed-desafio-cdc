@@ -52,7 +52,7 @@ class LivroController {
 		   if (!existeCategoria)		  
 		   {
               
-			 return  await restricaoValidation(res,'Categoria informada não consta');
+			 return  await restricaoValidation(res,'Categoria informada não consta cadastrado');
 
 		   }	
 
@@ -64,7 +64,7 @@ class LivroController {
 		   if (!existeAutor)		  
 		   {
               
-			 return await restricaoValidation(res,'autor informado não consta ');
+			 return await restricaoValidation(res,'autor informado não consta cadastrado');
 
 		   }	
 
