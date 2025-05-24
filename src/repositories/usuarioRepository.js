@@ -4,17 +4,15 @@ import Response from '../helpers/response.js'
 import consistirExiste from '../helpers/consistirExiste.js';
 
 
-var listaEstados = [];
+var listaUsuarios = [];
 
- const arquivo = './src/data/Estados.json';
+const arquivo = './src/data/Usuarios.json';
 
-
-
-class EstadoRepository {
+class UsuarioRepository {
 
 	
    
-	async save (estado) {
+	async save (usuario) {
 	
       const  response = new Response();
 	   
@@ -23,9 +21,9 @@ class EstadoRepository {
 	  response.message = 'Salvo com sucesso';
 
 
-	  response.data.push(estado);
+	  response.data.push(usuario);
 	  
-	  this.listSave(estado);
+	  this.listSave(usuario);
 
 	  return response;       
 
@@ -33,12 +31,12 @@ class EstadoRepository {
 	}
 
 
-	listSave (estado) {
+	listSave (usuario) {
 
 
-		listaEstados.push(estado);
+		listaUsuarios.push(usuario);
 
-		const jsonString = JSON.stringify(listaEstados);
+		const jsonString = JSON.stringify(listaUsuarios);
      
 
 		if (fs.existsSync(arquivo)) {
@@ -53,12 +51,13 @@ class EstadoRepository {
 			if (err) {
            console.error("Erro ao escrever o arquivo:", err);
           } else {
-            console.log("Array salvo em Estados.json");
+            console.log("Array salvo em usuarios.json");
           }
        
 		});
 
 	}
+
 
 
      async loadList() {
@@ -71,7 +70,7 @@ class EstadoRepository {
 
 		   if (_arquivo != '')
 		   {
-              listaEstados  =  JSON.parse(_arquivo);
+              listaUsuarios  =  JSON.parse(_arquivo);
 
 		   }
 
@@ -87,30 +86,26 @@ class EstadoRepository {
 
         let lista = []
      	
-		if (listaEstados.length >  0)
+		if (listaUsuarios.length >  0)
 		{
 
-           listaEstados.forEach(estado => {
-
+           listaAutores.forEach(usuario => {
 
 			
-			   Object.keys(estado).forEach(key => {
+			   Object.keys(usuario).forEach(key => {
 
                 
 
-				if (key.toUpperCase() == chave.toUpperCase() && estado[key].toUpperCase() == valor.toUpperCase())
-				{
-					
-					lista.push(estado);
+				if (key.toUpperCase() == chave.toUpperCase() && usuario[key].toUpperCase() == valor.toUpperCase())
+				{					
+					lista.push(usuario);
 				}	
 
                 
 
              });
 		   })
-
           
-
 
 		}	
 
@@ -120,13 +115,10 @@ class EstadoRepository {
 	 }
 
 
+	 async consistirExiste (chave,valor) {
 
-	 async consistirExiste (chave,valor) 
-	 {
-		return await consistirExiste(listaEstados,chave,valor);
-	 }
-
-	
+		return await consistirExiste(listaUsuarios,chave,valor);
+	 }	
 
 	constructor () {
 
@@ -137,4 +129,4 @@ class EstadoRepository {
 }
 
 
-export default EstadoRepository;
+export default UsuarioRepository;

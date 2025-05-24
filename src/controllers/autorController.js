@@ -60,6 +60,7 @@ class AutorController {
 		  let httpStatus = 200;
 	
 			
+		  const repository = new AutorRepository();
 		   response  = await repository.find();
 
 		   if (!response.success) httpStatus = 400; 

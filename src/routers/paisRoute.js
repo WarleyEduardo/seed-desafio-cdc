@@ -5,6 +5,6 @@ import validate from '../middlewares/handleValidation.js';
 
 const paisRoute = express.Router();
 
-paisRoute.post('/', postPaisValidation(), validate, PaisController.postPais);
+paisRoute.post('/pais', postPaisValidation(), validate, PaisController.postPais);
 
 export default paisRoute;

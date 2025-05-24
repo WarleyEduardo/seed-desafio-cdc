@@ -5,6 +5,6 @@ import validate from '../middlewares/handleValidation.js';
 
 const categoriaRoute = express.Router();
 
-categoriaRoute.post('/', postCategoriaValidation(), validate, CategoriaController.postCategoria);
+categoriaRoute.post('/categoria', postCategoriaValidation(), validate, CategoriaController.postCategoria);
 
 export default categoriaRoute;

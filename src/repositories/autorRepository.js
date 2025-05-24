@@ -91,13 +91,14 @@ class AutorRepository {
 
         let lista = []
      	
-		if (listaAutores.length >  0)
+		if (listaAutores.length >  0 && chave != undefined  && valor != undefined)
 		{
 
            listaAutores.forEach(autor => {
 
+		
 			
-			   Object.keys(autor).forEach(key => {
+               	Object.keys(autor).forEach(key => {
 
                 
 
@@ -112,11 +113,21 @@ class AutorRepository {
 		   })
           
 
+		} else
+		{
+
+			lista = listaAutores;
 		}	
+
+
+
+		 response.success = lista.length > 0 ? true : false;
+		 response.message = 'Consulta realizada';
+		 response.data = lista;	
 
 	
 		
-		return lista;
+		return response;
 	 }
 
 

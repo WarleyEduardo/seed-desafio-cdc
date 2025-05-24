@@ -5,6 +5,6 @@ import validate from '../middlewares/handleValidation.js';
 
 const estadoRoute = express.Router();
 
-estadoRoute.post('/', postEstadoValidation(), validate, EstadoController.postEstado);
+estadoRoute.post('/estado', postEstadoValidation(), validate, EstadoController.postEstado);
 
 export default estadoRoute;
