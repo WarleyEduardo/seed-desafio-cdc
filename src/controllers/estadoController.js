@@ -1,6 +1,6 @@
 import Estado from '../models/estadoModel.js';
 import PaisRepository from '../repositories/paisRepository.js';
-import EstadoRepository from '../repositories/estadosRepository.js'
+import EstadoRepository from '../repositories/estadoRepository.js'
 import restricaoValidation from '../middlewares/restricaoValidation.js';
 
 
