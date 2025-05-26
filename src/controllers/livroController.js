@@ -17,11 +17,11 @@ class LivroController {
 
 		   let { titulo,resumo, sumario, preco, paginas, isbn, datapublicacao, categoria, autor  } = req.body;
 
-		   const livro           = new Livro(titulo,resumo,preco,isbn,paginas,categoria,autor);	
+		   const livro           =  new Livro(titulo,resumo,preco,isbn,paginas,categoria,autor);	
 		   livro.dataPublicacao  = datapublicacao == undefined ? null : datapublicacao ;
 		   livro.sumario         = sumario == undefined ? '' : sumario ;
 		   
-		   const livrorepository  = new LivroRepository();
+		   const livrorepository  = new  LivroRepository();
            let response           = null;       
 
 		   
@@ -99,12 +99,11 @@ class LivroController {
 
 		try {
 
-			
+		
 		   let httpStatus = 200;
-
-		   
-		   const livrorepository  = new LivroRepository();
-           let response           = null;   
+	   
+		   const livrorepository  =  new LivroRepository();
+		   let response           = null;   
 
 			
 		   response  = await livrorepository.find('','',['id','titulo']);

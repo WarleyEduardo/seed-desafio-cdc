@@ -1,16 +1,12 @@
 
-import fs from 'fs';
 import Response from '../helpers/response.js'
 import consistirExiste from '../helpers/consistirExiste.js';
+import {saveArquivo,loadArquivo, findRegistro} from '../helpers/arquivo.js';
 
-
-var listaUsuarios = [];
-
-const arquivo = './src/data/Usuarios.json';
 
 class UsuarioRepository {
 
-	
+	arquivo = './src/data/Usuarios.json';
    
 	async save (usuario) {
 	
@@ -33,97 +29,39 @@ class UsuarioRepository {
 
 	listSave (usuario) {
 
-
-		listaUsuarios.push(usuario);
-
-		const jsonString = JSON.stringify(listaUsuarios);
-     
-
-		if (fs.existsSync(arquivo)) {
-
-			fs.unlinkSync(arquivo);
-		}
-
-		
-
-		fs.writeFile(arquivo, jsonString, (err) => {
-        
-			if (err) {
-           console.error("Erro ao escrever o arquivo:", err);
-          } else {
-            console.log("Array salvo em usuarios.json");
-          }
-       
-		});
-
+	   saveArquivo(usuario,this.arquivo);
 	}
 
 
 
-     async loadList() {
-       	
+     async loadList() {       	
 
-		if (fs.existsSync(arquivo)) {
-
-			
-           const  _arquivo = fs.readFileSync(arquivo, 'utf8')
-
-		   if (_arquivo != '')
-		   {
-              listaUsuarios  =  JSON.parse(_arquivo);
-
-		   }
-
-			 
-		}	
-	
-
+		 return  await loadArquivo(this.arquivo); 	
 
 	} 
 	
 
-	async find (chave,valor) {
+	async find (chave,valor,campos) {
 
-        let lista = []
-     	
-		if (listaUsuarios.length >  0)
-		{
+		const _lista = await this.loadList();	
 
-           listaAutores.forEach(usuario => {
+	    const lista = await findRegistro(_lista,chave,valor,campos);
 
-			
-			   Object.keys(usuario).forEach(key => {
+		let response = new Response();
 
-                
-
-				if (key.toUpperCase() == chave.toUpperCase() && usuario[key].toUpperCase() == valor.toUpperCase())
-				{					
-					lista.push(usuario);
-				}	
-
-                
-
-             });
-		   })
-          
-
-		}	
-
-	
-		
-		return lista;
+		response.success  = lista.length > 0 ? true : false;
+		response.message  = 'Consulta realizada ';
+		response.data     = lista;
+		return response;
 	 }
 
 
 	 async consistirExiste (chave,valor) {
 
-		return await consistirExiste(listaUsuarios,chave,valor);
-	 }	
+		const _lista = await this.loadList();
 
-	constructor () {
-
-      this.loadList();	 
-   }
+		return await consistirExiste(_lista,chave,valor);
+	 }
 
 
 }

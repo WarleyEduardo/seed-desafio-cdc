@@ -1,17 +1,15 @@
 
-import fs from 'fs';
 import Response from '../helpers/response.js'
 import consistirExiste from '../helpers/consistirExiste.js';
+import {saveArquivo,loadArquivo,findRegistro} from '../helpers/arquivo.js'
 
 
-var listaCategoria = [];
-
- const arquivo = './src/data/Categorias.json';
 
 
 
 class CategoriaRepository {
 
+    arquivo = './src/data/Categorias.json';
 	
    
 	async save (categoria) {
@@ -36,27 +34,7 @@ class CategoriaRepository {
 	listSave (categoria) {
 
 
-		listaCategoria.push(categoria);
-
-		const jsonString = JSON.stringify(listaCategoria);
-     
-
-		if (fs.existsSync(arquivo)) {
-
-			fs.unlinkSync(arquivo);
-		}
-
-		
-
-		fs.writeFile(arquivo, jsonString, (err) => {
-        
-			if (err) {
-           console.error("Erro ao escrever o arquivo:", err);
-          } else {
-            console.log("Array salvo em categorias.json");
-          }
-       
-		});
+		 saveArquivo(categoria,this.arquivo);
 
 	}
 
@@ -64,75 +42,34 @@ class CategoriaRepository {
      async loadList() {
        	
 
-		if (fs.existsSync(arquivo)) {
-
-			
-           const  _arquivo = fs.readFileSync(arquivo, 'utf8')
-
-		   if (_arquivo != '')
-		   {
-              listaCategoria  =  JSON.parse(_arquivo);
-
-		   }
-
-			 
-		}	
+		return  await loadArquivo(this.arquivo); 	
 	
 
 
 	} 
 	
 
-	async find (chave,valor) {
+	async find (chave,valor,campos) {
 
-        let lista = []
-     	
-		if (listaCategoria.length >  0)
-		{
+      	const _lista = await this.loadList();	
 
-           listaCategoria.forEach(categoria => {
+	    const lista = await findRegistro(_lista,chave,valor,campos);
 
+		let response = new Response();
 
-			
-			   Object.keys(categoria).forEach(key => {
-
-                
-
-				if (key.toUpperCase() == chave.toUpperCase() && categoria[key].toUpperCase() == valor.toUpperCase())
-				{
-					
-					lista.push(categoria);
-				}	
-
-                
-
-             });
-		   })
-
-          
-
-
-		}	
-
-	
-		
-		return lista;
+		response.success  = lista.length > 0 ? true : false;
+		response.message  = 'Consulta realizada ';
+		response.data     = lista;
+		return response;
 	 }
 
 
 
 	  async consistirExiste (chave,valor) {
-		return await consistirExiste(listaCategoria,chave,valor);
+			const _lista = await this.loadList();
+
+		return await consistirExiste(_lista,chave,valor);
 	 }
-
-
-	
-
-	constructor () {
-
-      this.loadList();	 
-   }
-
 
 }
 

@@ -1,17 +1,12 @@
 
-import fs from 'fs';
 import Response from '../helpers/response.js'
 import consistirExiste from '../helpers/consistirExiste.js';
-
-
-var listaAutores = [];
-
- const arquivo = './src/data/Autores.json';
-
+import {saveArquivo,loadArquivo, findRegistro} from '../helpers/arquivo.js';
 
 
 class AutorRepository {
 
+	arquivo = './src/data/Autores.json';
 	
    
 	async save (autor) {
@@ -22,15 +17,10 @@ class AutorRepository {
 	  response.success = 'true';
 	  response.message = 'Salvo com sucesso';
 
-
 	  response.data.push(autor);
 	  
 	  this.listSave(autor);
-
-
-
-	  return response;
-       
+	  return response;      
 
 
 	}
@@ -38,110 +28,39 @@ class AutorRepository {
 
 	listSave (autor) {
 
-
-		listaAutores.push(autor);
-
-		const jsonString = JSON.stringify(listaAutores);
-     
-
-		if (fs.existsSync(arquivo)) {
-
-			fs.unlinkSync(arquivo);
-		}
-
-		
-
-		fs.writeFile(arquivo, jsonString, (err) => {
-        
-			if (err) {
-           console.error("Erro ao escrever o arquivo:", err);
-          } else {
-            console.log("Array salvo em autores.json");
-          }
-       
-		});
-
+	   saveArquivo(autor,this.arquivo);
 	}
 
 
 
-     async loadList() {
-       	
+     async loadList() {       	
 
-		if (fs.existsSync(arquivo)) {
-
-			
-           const  _arquivo = fs.readFileSync(arquivo, 'utf8')
-
-		   if (_arquivo != '')
-		   {
-              listaAutores  =  JSON.parse(_arquivo);
-
-		   }
-
-			 
-		}	
-	
-
+		 return  await loadArquivo(this.arquivo); 	
 
 	} 
 	
 
-	async find (chave,valor) {
+	async find (chave,valor,campos) {
 
-        let lista = []
-     	
-		if (listaAutores.length >  0 && chave != undefined  && valor != undefined)
-		{
+		const _lista = await this.loadList();	
 
-           listaAutores.forEach(autor => {
+	    const lista = await findRegistro(_lista,chave,valor,campos);
 
-		
-			
-               	Object.keys(autor).forEach(key => {
+		let response = new Response();
 
-                
-
-				if (key.toUpperCase() == chave.toUpperCase() && autor[key].toUpperCase() == valor.toUpperCase())
-				{					
-					lista.push(autor);
-				}	
-
-                
-
-             });
-		   })
-          
-
-		} else
-		{
-
-			lista = listaAutores;
-		}	
-
-
-
-		 response.success = lista.length > 0 ? true : false;
-		 response.message = 'Consulta realizada';
-		 response.data = lista;	
-
-	
-		
+		response.success  = lista.length > 0 ? true : false;
+		response.message  = 'Consulta realizada ';
+		response.data     = lista;
 		return response;
 	 }
 
 
 	 async consistirExiste (chave,valor) {
 
-		return await consistirExiste(listaAutores,chave,valor);
+		const _lista = await this.loadList();
+
+		return await consistirExiste(_lista,chave,valor);
 	 }
-
-	
-
-	constructor () {
-
-      this.loadList();	 
-   }
 
 
 }

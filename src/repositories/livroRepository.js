@@ -1,17 +1,11 @@
-import fs from 'fs';
 import Response from '../helpers/response.js'
 import consistirExiste from '../helpers/consistirExiste.js';
-import salvarArquivo from '../helpers/salvarArquivo.js';
-import carregarArquivo from '../helpers/carregarArquivo.js';
-import findRegistro from '../helpers/findRegistro.js';
-
-var listaLivros = [];
-
-const arquivo = './src/data/Livros.json';
-
+import {saveArquivo,loadArquivo,findRegistro} from '../helpers/arquivo.js'
 class LivroRepository {	
-	
+
    
+     arquivo =  './src/data/Livros.json';
+
 	async save (livro) 
 	{
 	
@@ -32,52 +26,24 @@ class LivroRepository {
 
 
 	listSave (livro) {
+	    
+     	saveArquivo(livro,this.arquivo);
 
-    	listaLivros.push(livro);
-     	salvarArquivo(listaLivros,arquivo);
+	}	
 
-	}
+    async loadList() {
 
-
-	
-
-	carregarArquivo2 (arquivo) {
-	
-		let lista = [];
-	
-		 if (fs.existsSync(arquivo)) {
-	
-				
-			const  _arquivo =   fs.readFileSync(arquivo, 'utf8')
-	
-			if (_arquivo != '')
-			{
-				lista  =   JSON.parse(_arquivo);
-	
-				
-			}
-				 
-		}	
-	
-	
-		return lista;
-		
-	}
-
-
-
-    async loadList() 	{
-	
-		 listaLivros =  carregarArquivo(arquivo);   	
-
-		// listaLivros =  this.carregarArquivo2(arquivo);
+		 return  await loadArquivo(this.arquivo); 			 
 	} 
 	
 
-	async find (chave,valor,campos) {
+	async find (chave,valor,campos) {	
 
-	    const lista = await findRegistro(listaLivros,chave,valor,campos);
-		
+
+		const _lista = await this.loadList();	
+
+	    const lista = await findRegistro(_lista,chave,valor,campos);
+
 		let response = new Response();
 
 		response.success  = lista.length > 0 ? true : false;
@@ -90,16 +56,11 @@ class LivroRepository {
 
 	 async consistirExiste (chave,valor) {
 
-		return await consistirExiste(listaLivros,chave,valor);
+
+		const _lista = await this.loadList();
+
+		return await consistirExiste(_lista,chave,valor);
 	 }
-
-	
-
-	constructor  () {
-
-        this.loadList();	 
-   }
-
 
 }
 
