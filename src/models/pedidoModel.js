@@ -1,0 +1,29 @@
+
+import gerarId from '../helpers/gerarId.js';
+
+class Pedido {
+   
+   id  =  ''
+   cliente = null;
+   itens = [];
+   total = 0;
+   data = null;
+ 
+
+
+   constructor (cliente,lista, total) 
+   {
+
+      this.id        = gerarId();
+	  this.cliente   = cliente;
+	  this.itens     = lista;
+	  this.total     = total;
+	  this.data      = new Date().toLocaleDateString('pt-BR'); 	  
+	 
+   }
+
+
+}
+
+
+export default Pedido;
