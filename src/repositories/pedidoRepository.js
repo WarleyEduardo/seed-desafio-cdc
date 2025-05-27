@@ -32,8 +32,7 @@ class PedidoRepository {
 	}
 
 
-
-     async loadList() {       	
+    async loadList() {       	
 
 		 return  await loadArquivo(this.arquivo); 	
 

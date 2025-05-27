@@ -1,7 +1,7 @@
 
 import gerarId from '../helpers/gerarId.js';
 
-class Usuario {
+class Cliente {
    
    id          = '';
    nome        = '';
@@ -41,4 +41,4 @@ class Usuario {
 }
 
 
-export default Usuario;
+export default Cliente;

@@ -4,7 +4,7 @@ import removerCampos from './removerCampos.js';
 
 export const saveArquivo = async (registro,arquivo) =>
 {
-	var lista = await carregarArquivo(arquivo);
+	var lista = await loadArquivo(arquivo);
 
 	lista.push(registro);
 	

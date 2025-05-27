@@ -10,7 +10,6 @@ class PedidoController {
 	static async postPedido(req, res, next) {
 
 
-
 		try {
 			
 		
@@ -18,14 +17,11 @@ class PedidoController {
 
 		   let { cliente , itens, total } = req.body;
 
-		   const estado            = new Estado(nome,pais);	 		
-		   const estadoRepository  = new EstadoRepository();
-		   const paisRepository    = new PaisRepository();
-           let response            =  null;	
-
-
+		   const pedido            =  new Pedido(cliente,[],15);	 		
+		   const pedidoRepository  =  new PedidoRepository();
+		   let response            =  null;	
 			
-		   response  = await pedidoRepository.save(estado);
+		   response  = await pedidoRepository.save(pedido);
 
 		   if (!response.success) httpStatus = 400; 
 
@@ -42,4 +38,4 @@ class PedidoController {
 }
 
 
-export default EstadoController;
+export default PedidoController;

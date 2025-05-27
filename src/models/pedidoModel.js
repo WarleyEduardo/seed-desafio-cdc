@@ -4,7 +4,7 @@ import gerarId from '../helpers/gerarId.js';
 class Pedido {
    
    id  =  ''
-   cliente = null;
+   cliente = {};
    itens = [];
    total = 0;
    data = null;

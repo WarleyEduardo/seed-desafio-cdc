@@ -4,9 +4,9 @@ import consistirExiste from '../helpers/consistirExiste.js';
 import {saveArquivo,loadArquivo, findRegistro} from '../helpers/arquivo.js';
 
 
-class UsuarioRepository {
+class ClienteRepository {
 
-	arquivo = './src/data/Usuarios.json';
+	arquivo = './src/data/Clientes.json';
    
 	async save (usuario) {
 	
@@ -67,4 +67,4 @@ class UsuarioRepository {
 }
 
 
-export default UsuarioRepository;
+export default ClienteRepository;

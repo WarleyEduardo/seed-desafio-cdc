@@ -1,13 +1,13 @@
-import Usuario from '../models/usuarioModel.js';
-import UsuarioRepository from '../repositories/usuarioRepository.js';
+import Cliente from '../models/clienteModel.js';
+import ClienteRepository from '../repositories/clienteRepository.js';
 import restricaoValidation from '../middlewares/restricaoValidation.js';
 
 
 
-class UsuarioController {
+class ClienteController {
 
 
-	static async postUsuario(req, res, next) {
+	static async postCliente(req, res, next) {
 
 
 
@@ -18,8 +18,8 @@ class UsuarioController {
 
 		   let { nome, sobrenome,email, documento,endereco,complemento,cidade,pais,estado, telefone,cep } = req.body;
 
-		   const usuario  = new Usuario(nome, sobrenome,email, documento,endereco,complemento,cidade,pais,estado, telefone,cep );	 		
-		   const repository = new UsuarioRepository();
+		   const cliente    = new Cliente(nome, sobrenome,email, documento,endereco,complemento,cidade,pais,estado, telefone,cep );	 		
+		   const repository = new ClienteRepository();
            let response     = null;	
 		   
 		   
@@ -33,7 +33,7 @@ class UsuarioController {
 		   }	
 
 			
-		   response  = await repository.save(usuario);
+		   response  = await repository.save(cliente);
 
 		   if (!response.success) httpStatus = 400; 
 
@@ -50,4 +50,4 @@ class UsuarioController {
 }
 
 
-export default UsuarioController;
+export default ClienteController;

@@ -1,6 +1,6 @@
 import { body } from 'express-validator';
 
-export const postUsuarioValidation = () => 
+export const postClienteValidation = () => 
 {
 	return [
 		body('nome').isString().withMessage('campo nome deve ser informado no body').notEmpty().withMessage('campo nome não pode ficar vazio'),
@@ -18,5 +18,5 @@ export const postUsuarioValidation = () =>
 	];
 };
 
-export default postUsuarioValidation
+export default postClienteValidation
 

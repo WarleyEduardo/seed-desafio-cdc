@@ -4,7 +4,8 @@ import categoriaRoute from './categoriaRoute.js';
 import livroRoute from './livroRoute.js';
 import paisRoute from './paisRoute.js';
 import estadoRoute from './estadoRoute.js';
-import usuarioRoute from './usuarioRoute.js';
+import clienteRoute from './clienteRoute.js';
+import pedidoRoute from './pedidoRoute.js';
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.use(categoriaRoute);
 router.use(livroRoute);
 router.use(paisRoute);
 router.use(estadoRoute);
-router.use(usuarioRoute)
+router.use(clienteRoute);
+router.use(pedidoRoute)
 
 export default router;
