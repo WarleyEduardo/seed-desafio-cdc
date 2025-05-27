@@ -9,46 +9,23 @@ class Pedido {
    itens = [];
    total = 0;
    data = null;
-   #clienteRepository = null;
    #livroRepository   = null;
 
- 
 
-   constructor (cliente,lista, total, clienteRepository, livroRepository) 
+   constructor (cliente,lista, total,livroRepository) 
    {
 
       this.id                 = gerarId();
 	  this.cliente            = cliente;
 	  this.itens              = lista;
 	  this.total              = total.toFixed(2);
-	  this.#clienteRepository  = clienteRepository;
 	  this.#livroRepository    = livroRepository;
 	  this.data               = new Date().toLocaleDateString('pt-BR'); 	  
 	 
    }
 
 
-     async consistirTotalItens() {
-         
-		let response = new Response();		
-		let total = 40;
-          
-        response.success = true;
-		response.message = 'Valor total de itens válido !';
-
-		if (total !== this.total){
-
-			response.success = false;
-			response.message = 'valor total de itens inconsistente';
-		}
-		
-
-       return response
-
-	} 
-
-
-   
+    
     async consistir () {
 
 	  let totalItem = 0	
@@ -60,7 +37,7 @@ class Pedido {
 
 	  for (const item of this.itens) {
 		 
-		  response = await this.#livroRepository.find('id',item.idlivro)
+		  response = await this.#livroRepository.find('id',item.idLivro)
 
 
 		  
@@ -68,7 +45,7 @@ class Pedido {
 		  if (!response.success) 
 		  {
 
-                response.message = 'idlivro ' + item.idlivro + ' não consta ';
+                response.message = 'idlivro ' + item.idLivro + ' não consta ';
 				
 				break
 		  } 
@@ -98,7 +75,7 @@ class Pedido {
 	  return response;
 
    }
-   
+
 }
 
 
