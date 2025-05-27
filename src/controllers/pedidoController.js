@@ -1,6 +1,8 @@
 import Pedido from '../models/pedidoModel.js';
 import PedidoRepository from '../repositories/pedidoRepository.js'
 import restricaoValidation from '../middlewares/restricaoValidation.js';
+import LivroRepository from '../repositories/livroRepository.js'
+import ClienteRepository from '../repositories/clienteRepository.js'
 
 
 class PedidoController {
@@ -16,15 +18,17 @@ class PedidoController {
 
 		   let { cliente , itens, total } = req.body;
 
-		   const pedido            =  new Pedido(cliente,itens,total);	 		
+		   const livroRepository   =  new LivroRepository();
+		   const clienteRepository =  new ClienteRepository();
+		   const pedido            =  new Pedido(cliente,itens,total,clienteRepository, livroRepository);	 		
 		   const pedidoRepository  =  new PedidoRepository();
+		  
 		   let response            =  null;	
 
 		   response  = await pedido.consistir();
 			
 		   
-		   if (response.success)
-		   {
+		   if (response.success)		   {
 
 			  response  = await pedidoRepository.save(pedido);
 

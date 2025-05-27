@@ -9,12 +9,10 @@ class Pedido {
    itens = [];
    total = 0;
    data = null;
-   clienteRepository = null;
-   livroRepository   = null;
+   #clienteRepository = null;
+   #livroRepository   = null;
 
-
-
-
+ 
 
    constructor (cliente,lista, total, clienteRepository, livroRepository) 
    {
@@ -22,9 +20,9 @@ class Pedido {
       this.id                 = gerarId();
 	  this.cliente            = cliente;
 	  this.itens              = lista;
-	  this.total              = total;
-	  this.clienteRepository  = clienteRepository;
-	  this.livroRepository    = livroRepository;
+	  this.total              = total.toFixed(2);
+	  this.#clienteRepository  = clienteRepository;
+	  this.#livroRepository    = livroRepository;
 	  this.data               = new Date().toLocaleDateString('pt-BR'); 	  
 	 
    }
@@ -52,24 +50,55 @@ class Pedido {
 
    
     async consistir () {
+
+	  let totalItem = 0	
       
 	  let response = new Response();
 
       response.success = true;
 	  response.message = 'validado com sucesso!';
 
+	  for (const item of this.itens) {
+		 
+		  response = await this.#livroRepository.find('id',item.idlivro)
 
-	  response = await this.consistirTotalItens();
+
+		  
+
+		  if (!response.success) 
+		  {
+
+                response.message = 'idlivro ' + item.idlivro + ' não consta ';
+				
+				break
+		  } 
+		  
+		  
+        const {preco} =  response.data[0] ;
+		totalItem +=   item.quantidade *   preco.toFixed(2);
+		  
+	  }
+
+
+      response.data = [];
+
+	  if (response.success)
+      {
+
+         if (this.total != totalItem)
+	     {
+
+           response.success = false;
+		   response.message = 'Total não confere com o total dos itens'
+
+	     }		  
+	  }
+  
 
 	  return response;
 
    }
- 
-
-
-
-
-
+   
 }
 
 
