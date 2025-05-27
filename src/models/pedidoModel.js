@@ -1,5 +1,6 @@
 
 import gerarId from '../helpers/gerarId.js';
+import Response from '../helpers/response.js';
 
 class Pedido {
    
@@ -8,6 +9,21 @@ class Pedido {
    itens = [];
    total = 0;
    data = null;
+
+
+
+
+    consistir () {
+      
+	  let response = new Response();
+
+      response.success = true;
+	  response.message = 'validado com sucesso!';
+
+
+	  return response;
+
+   }
  
 
 
@@ -21,6 +37,9 @@ class Pedido {
 	  this.data      = new Date().toLocaleDateString('pt-BR'); 	  
 	 
    }
+
+
+
 
 
 }

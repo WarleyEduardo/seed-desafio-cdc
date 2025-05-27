@@ -3,7 +3,6 @@ import PedidoRepository from '../repositories/pedidoRepository.js'
 import restricaoValidation from '../middlewares/restricaoValidation.js';
 
 
-
 class PedidoController {
 
 
@@ -17,11 +16,20 @@ class PedidoController {
 
 		   let { cliente , itens, total } = req.body;
 
-		   const pedido            =  new Pedido(cliente,[],15);	 		
+		   const pedido            =  new Pedido(cliente,itens,total);	 		
 		   const pedidoRepository  =  new PedidoRepository();
 		   let response            =  null;	
+
+		   response  = await Pedido.consistir();
 			
-		   response  = await pedidoRepository.save(pedido);
+		   
+		   if (response.success)
+		   {
+
+			  response  = await pedidoRepository.save(pedido);
+
+		   }	
+		  
 
 		   if (!response.success) httpStatus = 400; 
 
