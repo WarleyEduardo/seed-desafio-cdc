@@ -5,7 +5,7 @@ import validate from '../middlewares/handleValidation.js';
 
 const pedidoRoute = express.Router();
 
-pedidoRoute.post('/pedido',  PedidoController.postPedido);
+pedidoRoute.post('/pedido', postPedidoValidation(), validate, PedidoController.postPedido);
 
 
 export default pedidoRoute;
