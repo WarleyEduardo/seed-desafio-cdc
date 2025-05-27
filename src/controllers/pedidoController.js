@@ -20,7 +20,7 @@ class PedidoController {
 		   const pedidoRepository  =  new PedidoRepository();
 		   let response            =  null;	
 
-		   response  = await Pedido.consistir();
+		   response  = await pedido.consistir();
 			
 		   
 		   if (response.success)

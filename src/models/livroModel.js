@@ -39,14 +39,10 @@ class Livro {
    consistirCampos() {
 
      
-	 let dataAtual = new Date(); 
-      dataAtual = dataAtual.toLocaleDateString('pt-BR'); 
-
+	  let dataAtual = new Date(); 
+      dataAtual = dataAtual.toLocaleDateString('pt-BR'); 	
 	
-	
-	
-	
-	const response = new Response();
+	  const response = new Response();
 	 response.success = true;
 	 response.message = 'Validado com sucesso';
 
