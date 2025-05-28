@@ -84,7 +84,7 @@ class PedidoUseCase {
 	async consitirTotalItens (listaItens,total,perDesconto) 
 	{
 
-	   let totalItem = 0	
+	   let totalItens = 0	
        let response = new Response();
        const livroRepository   =  new LivroRepository();
 
@@ -105,28 +105,29 @@ class PedidoUseCase {
 		  
 		  
         const {preco} =  response.data[0] ;
-		totalItem +=   item.quantidade *   preco.toFixed(2);
+		totalItens +=   item.quantidade *   preco.toFixed(2);
 		  
 	  }
 
-      response.data = [];
+      response.data = [{totalItens}];
 	 
 	 
 	  if (response.success)
       {
         if (perDesconto >  0) 		{
            
-			 totalItem =  totalItem - (  totalItem  *  ( this.perDesconto / 100)  )
+			 totalItens =  totalItens - (  totalItens  *  ( this.perDesconto / 100)  )
 
-			 totalItem = totalItem.toFixed(2);
+			 totalItens = totalItens.toFixed(2);
                 
 		}
 
-         if (total != totalItem)
+         if (total != totalItens)
 	     {
 
            response.success = false;
-		   response.message = 'Total não confere com o total dos itens'
+		   response.message = 'Total não confere com o total dos itens',
+		   response.data = []
 
 	     }		  
 	  }
@@ -140,9 +141,9 @@ class PedidoUseCase {
 	async salvarPedido(pedidoCompra)
 	{
 
-		const {cliente,listaItens, total} = pedidoCompra;
+		const {cliente,listaItens, total , desconto} = pedidoCompra;
 		
-		const pedido            =  new Pedido(cliente,listaItens,total);
+		const pedido            =  new Pedido(cliente,listaItens,total,desconto);
         const pedidoRepository  =  new PedidoRepository();	
 
 		return  await pedidoRepository.save(pedido);
@@ -259,10 +260,14 @@ class PedidoUseCase {
 		if (!response.success) 
         {
            response.data = [];
-			return response;	 
+		    return response;	 
 		  	
-		}	
+		}
+		
 
+		const {totalItens } = response.data[0]; ;
+		pedidoCompra.toltaItens = totalItens;
+		pedidoCompra.desconto   = totalItens -  pedidoCompra.total;
 
 		response  = await  this.salvarPedido(pedidoCompra);
 

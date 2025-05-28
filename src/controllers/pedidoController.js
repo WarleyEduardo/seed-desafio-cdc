@@ -25,7 +25,9 @@ class PedidoController {
               cliente,
 			  listaItens : itens,
 			  total,
-			  cupomDesconto : cupomdesconto == undefined ? '' : cupomdesconto 
+			  cupomDesconto : cupomdesconto == undefined ? '' : cupomdesconto,
+			  totalItens : 0,
+			  desconto : 0
 
 		   }
 
@@ -41,7 +43,7 @@ class PedidoController {
 			
 		} catch (e) {
 
-			restricaoValidation(res,'Erro ao gravar estado : ' +  e );
+			restricaoValidation(res,'Erro ao gravar pedido : ' +  e );
 			
 		}
 
