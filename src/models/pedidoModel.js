@@ -1,6 +1,5 @@
 
 import gerarId from '../helpers/gerarId.js';
-import Response from '../helpers/response.js';
 
 class Pedido {
    
@@ -11,76 +10,20 @@ class Pedido {
    data = null;
    perDesconto   = 0 
    cupomDesconto = ''
-   #livroRepository   = null;
 
 
-   constructor (cliente,lista, total,livroRepository) 
+   constructor (cliente,lista, total) 
    {
 
       this.id                 = gerarId();
 	  this.cliente            = cliente;
 	  this.itens              = lista;
 	  this.total              = total.toFixed(2);
-	  this.#livroRepository    = livroRepository;
-	  this.data               = new Date().toLocaleDateString('pt-BR');   
+	  this.data               = new Date().toLocaleDateString('pt-BR'); 
 	 
    }
+   
 
-    
-    async consistir () {
-
-	  let totalItem = 0	
-      
-	  let response = new Response();
-
-      response.success = true;
-	  response.message = 'validado com sucesso!';
-
-	  for (const item of this.itens) {
-		 
-		  response = await this.#livroRepository.find('id',item.idLivro)
-		  
-
-		  if (!response.success) 
-		  {
-
-                response.message = 'idlivro ' + item.idLivro + ' não consta ';
-				
-				break
-		  } 
-		  
-		  
-        const {preco} =  response.data[0] ;
-		totalItem +=   item.quantidade *   preco.toFixed(2);
-		  
-	  }
-
-      response.data = [];
-	 
-	 
-	  if (response.success)
-      {
-        if (this.perDesconto >  0) 		{
-           
-			 totalItem =  totalItem - (  totalItem  *  ( this.perDesconto / 100)  )
-
-			 totalItem = totalItem.toFixed(2);
-                
-		}
-
-         if (this.total != totalItem)
-	     {
-
-           response.success = false;
-		   response.message = 'Total não confere com o total dos itens'
-
-	     }		  
-	  }
-  
-
-	  return response;
-
-   }
 
 }
 
