@@ -17,7 +17,8 @@ export const postPedidoValidation = () =>
 		body('cliente.cep').isString().withMessage('campo cep do cliente deve ser informado no body').notEmpty().withMessage('campo cep do cliente não pode ficar vazio'),
 		body('itens').isArray().withMessage('campo array de itens deve ser informado no body ').isArray({min: 1}).withMessage('idLivro e quantidade não informados no array'),
 	   	check("itens.*.idLivro").not().isEmpty().withMessage('idlivro deve ser informado no array de itens'),
-		check("itens.*.quantidade").not().isEmpty().withMessage('quantidade deve ser informado no array de itens').isInt().withMessage('quantidade inválida'),		
+		check("itens.*.quantidade").not().isEmpty().withMessage('quantidade deve ser informado no array de itens').isInt().withMessage('quantidade inválida').
+		isInt({min:1}).withMessage('quantidade deve ser maior do que zero'),		
 		
 	];
 };
