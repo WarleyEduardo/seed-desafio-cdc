@@ -97,9 +97,8 @@ class PedidoController {
 					  if (response.success) 
 					  {
 
-						const {id} = response.data[0];
-
-				        idPais = id;
+						  const {id} = response.data[0];
+				         idPais = id;
                           
 
 					  }	
@@ -115,14 +114,9 @@ class PedidoController {
                       const estado = new Estado(cliente.estado,idPais);
 
 					  estadoRepository.save(estado);
-				 }	
-
-
-
+				 }
 			  
 			  } 
-
-
 
 		   }	
 		  

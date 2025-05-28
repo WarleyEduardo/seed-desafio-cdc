@@ -1,12 +1,5 @@
 import { body, check } from 'express-validator';
-/*
-export const postPedidoValidation = () => 
-{
-	return [
-		body('cliente').isString().withMessage('campo cliente deve ser informado no body').notEmpty().withMessage('campo cliente não pode ficar vazio'),
-	];
-};
-*/
+
 export const postPedidoValidation = () => 
 {
 	return [
@@ -22,8 +15,9 @@ export const postPedidoValidation = () =>
 		body('cliente.estado').isString().withMessage('campo estado do cliente deve ser informado no body'),
 		body('cliente.telefone').isString().withMessage('campo telefone do cliente deve ser informado no body').notEmpty().withMessage('campo telefone do cliente não pode ficar vazio'),
 		body('cliente.cep').isString().withMessage('campo cep do cliente deve ser informado no body').notEmpty().withMessage('campo cep do cliente não pode ficar vazio'),
-		body('itens').isArray().withMessage('campo array de itens  deve ser informado no body'),
-	     body("itens.*.idLivro").isString().withMessage('campo idLivro deve ser informado no array de itens').notEmpty().withMessage('campo idLivro não pode ficar vazio no array de itens')
+		body('itens').isArray().withMessage('campo array de itens deve ser informado no body ').isArray({min: 1}).withMessage('idLivro e quantidade não informados no array'),
+	   	check("itens.*.idLivro").not().isEmpty().withMessage('idlivro deve ser informado no array de itens'),
+		check("itens.*.quantidade").not().isEmpty().withMessage('quantidade deve ser informado no array de itens').isInt().withMessage('quantidade inválida'),		
 		
 	];
 };

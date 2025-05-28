@@ -20,10 +20,9 @@ class Pedido {
 	  this.itens              = lista;
 	  this.total              = total.toFixed(2);
 	  this.#livroRepository    = livroRepository;
-	  this.data               = new Date().toLocaleDateString('pt-BR'); 	  
+	  this.data               = new Date().toLocaleDateString('pt-BR');   
 	 
    }
-
 
     
     async consistir () {
@@ -38,8 +37,6 @@ class Pedido {
 	  for (const item of this.itens) {
 		 
 		  response = await this.#livroRepository.find('id',item.idLivro)
-
-
 		  
 
 		  if (!response.success) 
