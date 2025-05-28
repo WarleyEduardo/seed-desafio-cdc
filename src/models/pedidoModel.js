@@ -9,6 +9,8 @@ class Pedido {
    itens = [];
    total = 0;
    data = null;
+   perDesconto   = 0 
+   cupomDesconto = ''
    #livroRepository   = null;
 
 
@@ -53,11 +55,18 @@ class Pedido {
 		  
 	  }
 
-
       response.data = [];
-
+	 
+	 
 	  if (response.success)
       {
+        if (this.perDesconto >  0) 		{
+           
+			 totalItem =  totalItem - (  totalItem  *  ( this.perDesconto / 100)  )
+
+			 totalItem = totalItem.toFixed(2);
+                
+		}
 
          if (this.total != totalItem)
 	     {

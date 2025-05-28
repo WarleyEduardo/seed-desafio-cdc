@@ -8,6 +8,9 @@ import Pais from '../models/paisModel.js';
 import Estado from '../models/estadoModel.js';
 import PaisRepository from '../repositories/paisRepository.js'
 import EstadoRepository from '../repositories/estadoRepository.js'
+import CupomRepository from '../repositories/cupomRepository.js';
+import Cupom from '../models/cupomModel.js';
+import Response from '../helpers/response.js';
 
 
 
@@ -22,7 +25,7 @@ class PedidoController {
 		
 		   let httpStatus = 200;
 
-		   let { cliente , itens, total } = req.body;
+		   let { cliente , itens, total, cupomdesconto } = req.body;
 
 		   const livroRepository   =  new LivroRepository();
 		   const clienteRepository =  new ClienteRepository();
@@ -30,6 +33,57 @@ class PedidoController {
 		   const paisRepository    =  new PaisRepository(); 
 		 
 		   const pedido            =  new Pedido(cliente,itens,total,livroRepository);	 		
+		  
+           if (cupomdesconto != undefined)
+		   {
+
+
+			   const cupomRepository = new CupomRepository();
+
+			   let response = await cupomRepository.find('codigo',cupomdesconto);            
+
+			   if (response.success) {
+
+
+                  const { percentual, dataValidade  } = response.data[0];
+
+				  const cupom  = new Cupom(cupomdesconto,percentual, dataValidade);;
+
+				  response = await cupom.consistirValidade();
+
+				  if (response.success) 
+				  {
+
+					  
+                     pedido.cupomDesconto = cupomdesconto;
+					 pedido.perDesconto    = percentual
+
+
+				  } else
+				  {
+
+                       return res.status(400).send(response)  
+
+				  }
+
+
+			   } else
+			   {
+                   
+				  response.message = 'código de cupom inválido';			   
+
+                  return res.status(400).send(response)
+
+
+			   }	   
+                 
+
+
+		   }	
+
+
+
+		 
 		   const pedidoRepository  =  new PedidoRepository();		  
 		   let response            =  null;
 		   let existePais          = false;
@@ -62,7 +116,9 @@ class PedidoController {
 
 		   }
 
-		  response  = await pedido.consistir();
+		    
+		 
+		   response  = await pedido.consistir();
 			
 		   
 		   if (response.success) {

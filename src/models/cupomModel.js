@@ -21,6 +21,40 @@ class Cupom {
    }
 
 
+
+
+   
+    async consistirValidade() {
+
+     
+	  let dataAtual = new Date(); 
+      dataAtual = dataAtual.toLocaleDateString('pt-BR'); 	
+	
+	   const response = new Response();
+	   response.success = true;
+	   response.message = 'cupom dentro da validade';
+
+	   if (this.dataValidade != null)
+	  {
+       
+		if  (this.dataValidade < dataAtual)
+	    {
+	       response.success = false;
+		   response.message = 'validade do cupom expirada';
+
+	    }	
+
+	  }	
+
+
+	 return response;
+  
+
+   }
+
+
+
+
     consistirCampos() {
 
      

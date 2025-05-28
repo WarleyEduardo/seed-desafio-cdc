@@ -18,7 +18,11 @@ export const postPedidoValidation = () =>
 		body('itens').isArray().withMessage('campo array de itens deve ser informado no body ').isArray({min: 1}).withMessage('idLivro e quantidade não informados no array'),
 	   	check("itens.*.idLivro").not().isEmpty().withMessage('idlivro deve ser informado no array de itens'),
 		check("itens.*.quantidade").not().isEmpty().withMessage('quantidade deve ser informado no array de itens').isInt().withMessage('quantidade inválida').
-		isInt({min:1}).withMessage('quantidade deve ser maior do que zero'),		
+		isInt({min:1}).withMessage('quantidade deve ser maior do que zero'),
+		body('total').isCurrency().withMessage('campo total deve ser informado no body').isFloat({min:1}).withMessage('campo total deve ser mairo do que zero '),
+		body('cupomdesconto').optional().isString().not().isEmpty().withMessage('código do cupom de desconto deve ser informado'),
+
+			
 		
 	];
 };
