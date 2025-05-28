@@ -21,12 +21,12 @@ class LivroController {
 		   livro.dataPublicacao  = datapublicacao == undefined ? null : datapublicacao ;
 		   livro.sumario         = sumario == undefined ? '' : sumario ;
 		   
-		   const livrorepository  = new  LivroRepository();
+		   const livroRepository  = new  LivroRepository();
            let response           = null;       
 
 		   
 		   
-		   const existeTitulo = await livrorepository.consistirExiste('titulo',titulo);		   
+		   const existeTitulo = await livroRepository.consistirExiste('titulo',titulo);		   
 		 
 		   if (existeTitulo)
 		   {
@@ -36,7 +36,7 @@ class LivroController {
 		   }	
 
 
-		   const existeIsbn = await livrorepository.consistirExiste('isbn',isbn);		
+		   const existeIsbn = await livroRepository.consistirExiste('isbn',isbn);		
 		   
 		   if (existeIsbn)
 		   {
@@ -79,7 +79,7 @@ class LivroController {
 		      return res.status(httpStatus).send(response)
 		   }
 			
-		   response  = await livrorepository.save(livro);
+		   response  = await livroRepository.save(livro);
 
 		   if (!response.success) httpStatus = 400; 
 
@@ -102,11 +102,11 @@ class LivroController {
 		
 		   let httpStatus = 200;
 	   
-		   const livrorepository  =  new LivroRepository();
+		   const livroRepository  =  new LivroRepository();
 		   let response           = null;   
 
 			
-		   response  = await livrorepository.find('','',['id','titulo']);
+		   response  = await livroRepository.find('','',['id','titulo']);
 
 		   if (!response.success) httpStatus = 400; 
 
@@ -130,11 +130,11 @@ class LivroController {
 		 		
 		   let httpStatus = 200;
 		   
-		   const livrorepository  = new LivroRepository();
+		   const livroRepository  = new LivroRepository();
            let response           = null
 
 			
-		   response  = await livrorepository.find('id',id);
+		   response  = await livroRepository.find('id',id);
 
 		   if (!response.success) httpStatus = 404; 
 
